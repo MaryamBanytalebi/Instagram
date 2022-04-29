@@ -5,6 +5,7 @@ import com.example.instagram.data.DataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -12,5 +13,5 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
     @Provides
-    fun providesDataStore(context: Context) = DataStore(context)
+    fun providesDataStore(@ApplicationContext context: Context) = DataStore(context)
 }

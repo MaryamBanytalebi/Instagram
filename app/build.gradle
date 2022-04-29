@@ -55,6 +55,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$dagger_version"
     kapt "com.google.dagger:hilt-compiler:$dagger_version"
 
+    implementation 'androidx.multidex:multidex:2.0.1'
+
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
