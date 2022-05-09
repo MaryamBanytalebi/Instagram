@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val dataStore: DataStore
-) : BaseViewModel<LoginState, LoginEvent>() {
+) : BaseViewModel<LoginState, LoginEvent, LoginEffect>() {
 
     var firstTime = true
     override fun createInitialState() = LoginState.IDLE
@@ -27,7 +27,11 @@ class LoginViewModel @Inject constructor(
                         _state.emit(LoginState.GetLocal(languageId))
                     }
                     is LoginEvent.ChangeLocal -> {
-                        _state.emit(LoginState.ChangeLocal)
+                        dataStore.setLocalApp(event.languageId)
+                        _effect.send(LoginEffect.ChangeLocal)
+                    }
+                    is LoginEvent.Login -> {
+
                     }
                 }
             }
