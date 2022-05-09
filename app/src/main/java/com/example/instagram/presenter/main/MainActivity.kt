@@ -9,7 +9,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.instagram.R
 import com.example.instagram.data.DataStore
 import com.example.instagram.databinding.ActivityMainBinding
+import com.example.instagram.util.gone
 import com.example.instagram.util.setLocalApp
+import com.example.instagram.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                     is MainState.SetContentView -> {
                         binding = ActivityMainBinding.inflate(layoutInflater)
                         setContentView(binding.root)
-
+                        setupNavHost()
                     }
                 }
             }
@@ -47,6 +49,13 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavHost(){
         val navHost = binding.mainContainer as NavHostFragment
         controller = navHost.navController
-
+        controller.addOnDestinationChangedListener{ controller,destination, argument ->
+            when (destination.id) {
+                R.id.loginFragment -> binding.bottomNavigation.gone()
+                else -> {
+                    binding.bottomNavigation.visible()
+                }
+            }
+        }
     }
 }
