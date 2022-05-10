@@ -25,10 +25,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (viewModel.firstTime) viewModel.setEvent(LoginEvent.GetLocale)
 
-        viewModel.setEvent(LoginEvent.GetLocale)
         handleState()
         setupLanguageSpinner()
+        handleEffect()
     }
 
     private fun setupLanguageSpinner() {
@@ -57,27 +58,28 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect { state ->
                 when (state) {
-                    is LoginState.IDLE -> { }
+                    is LoginState.IDLE -> {
+                    }
                     is LoginState.GetLocal ->
-                        binding.spLanguages.setSelection(if (state.languageId == "en")0 else 1)
+                        binding.spLanguages.setSelection(if (state.languageId == "en") 0 else 1)
 
                 }
             }
         }
     }
 
-    private fun handleEffect(){
+    private fun handleEffect() {
         lifecycleScope.launchWhenCreated {
-            viewModel.effect.consumeAsFlow().collect(){ effect ->
-                when (effect){
+            viewModel.effect.consumeAsFlow().collect() { effect ->
+                when (effect) {
                     is LoginEffect.ChangeLocal -> {
-
+                        requireContext().restartApp(requireActivity())
                     }
                     is LoginEffect.SignUp -> {
-
+                        viewModel.firstTime = true
+                        findNavController().navigate(R.id.signupFragment)
                     }
                 }
-
             }
         }
     }

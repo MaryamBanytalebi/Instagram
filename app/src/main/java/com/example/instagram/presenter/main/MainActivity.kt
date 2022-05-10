@@ -51,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         controller = navHost.navController
         controller.addOnDestinationChangedListener{ controller,destination, argument ->
             when (destination.id) {
-                R.id.loginFragment -> binding.bottomNavigation.gone()
+                R.id.loginFragment, R.id.signupFragment ->
+                    binding.bottomNavigation.gone()
                 else -> {
                     binding.bottomNavigation.visible()
                 }
