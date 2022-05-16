@@ -29,4 +29,10 @@ abstract class BaseViewModel<US : UiState, UE : UiEvent, UEF : UiEffect> : ViewM
             _event.send(event)
         }
     }
+
+    fun setEffect(effect: UEF) {
+        viewModelScope.launch {
+            _effect.send(effect)
+        }
+    }
 }

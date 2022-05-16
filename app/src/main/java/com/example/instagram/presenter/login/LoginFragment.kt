@@ -30,6 +30,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         handleState()
         setupLanguageSpinner()
         handleEffect()
+        onLoginClicked()
     }
 
     private fun setupLanguageSpinner() {
@@ -62,7 +63,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     }
                     is LoginState.GetLocal ->
                         binding.spLanguages.setSelection(if (state.languageId == "en") 0 else 1)
-
+                    is LoginState.Login.Loading -> showToast("loading")
+                    is LoginState.Login.Success -> viewModel.setEffect(LoginEffect.Login)
+                    is LoginState.Login.Error -> showToast(state.message)
                 }
             }
         }
@@ -79,8 +82,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                         viewModel.firstTime = true
                         findNavController().navigate(R.id.signupFragment)
                     }
+
+                    is LoginEffect.Login -> {}
                 }
             }
+        }
+    }
+
+    private fun onLoginClicked(){
+        binding.btnLogin.setOnClickListener {
+            viewModel.setEvent(LoginEvent.Login("", ""))
         }
     }
 }

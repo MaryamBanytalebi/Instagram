@@ -18,9 +18,9 @@ object AppModule {
     @Provides
     @Singleton
     fun providesDataStore(@ApplicationContext context: Context) = DataStore(context)
+
     @Provides
     @Singleton
     fun provideRetrofit() = InitializeRetrofit().retrofit()
-    @Provides
-    fun provideApiService(retrofit: Retrofit) = InitializeRetrofit().apiService(retrofit)
+
 }
