@@ -89,8 +89,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun onLoginClicked(){
-        binding.btnLogin.setOnClickListener {
-            viewModel.setEvent(LoginEvent.Login("", ""))
+        with(binding) {
+            btnLogin.setOnClickListener {
+                viewModel.setEvent(
+                    LoginEvent.Login(usernameInput.getText(), passwordInput.getText())
+                )
+            }
         }
     }
 

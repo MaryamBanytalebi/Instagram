@@ -3,6 +3,7 @@ package com.example.instagram.util
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.textfield.TextInputLayout
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -23,3 +24,5 @@ fun View.showToast(message: String) {
 fun TextView.setEmpty(){
     text = ""
 }
+
+fun TextInputLayout.getText() = editText?.text.toString()
