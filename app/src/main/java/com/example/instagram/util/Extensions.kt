@@ -1,6 +1,7 @@
 package com.example.instagram.util
 
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 
 fun View.visible() {
@@ -17,4 +18,8 @@ fun View.invisible() {
 
 fun View.showToast(message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
+fun TextView.setEmpty(){
+    text = ""
 }

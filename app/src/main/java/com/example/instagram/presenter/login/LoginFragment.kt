@@ -12,8 +12,7 @@ import com.example.instagram.R
 import com.example.instagram.databinding.FragmentLoginBinding
 import com.example.instagram.presenter.base.BaseFragment
 import com.example.instagram.presenter.main.MainState
-import com.example.instagram.util.restartApp
-import com.example.instagram.util.setLocalApp
+import com.example.instagram.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -63,9 +62,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     }
                     is LoginState.GetLocal ->
                         binding.spLanguages.setSelection(if (state.languageId == "en") 0 else 1)
-                    is LoginState.Login.Loading -> showToast("loading")
+                    is LoginState.Login.Loading -> renderLogin(true)
                     is LoginState.Login.Success -> viewModel.setEffect(LoginEffect.Login)
-                    is LoginState.Login.Error -> showToast(state.message)
+                    is LoginState.Login.Error -> renderLogin(errorMessage = state.message)
                 }
             }
         }
@@ -92,6 +91,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun onLoginClicked(){
         binding.btnLogin.setOnClickListener {
             viewModel.setEvent(LoginEvent.Login("", ""))
+        }
+    }
+
+    private fun renderLogin(isLoading : Boolean = false, errorMessage : String = ""){
+        with(binding){
+            if (isLoading){
+                loginProgress.visible()
+                btnLogin.setEmpty()
+            }else{
+                loginProgress.invisible()
+                btnLogin.text = getString(R.string.login)
+                showToast(errorMessage)
+            }
         }
     }
 }
