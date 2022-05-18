@@ -7,4 +7,8 @@
     <string name="password">رمزعبور</string>
     <string name="login">ورود</string>
     <string name="signup">ثبت نام</string>
+
+    <string name="err_request_failed">درخواست با خطا مواجه شد</string>
+    <string name="err_time_out">زمان درخواست تمام شد</string>
+    <string name="err_no_internet">اتصال به اینترنت برقرا نمیباشد</string>
 </resources>
